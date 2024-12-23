@@ -2,7 +2,7 @@ package com.example.tusttreatment.controller;
 
 
 import com.example.tusttreatment.pojo.entity.Doctor;
-import com.example.tusttreatment.service.BaseDoctorSerivice;
+import com.example.tusttreatment.service.BaseDoctorService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,28 +13,28 @@ import java.util.List;
 @AllArgsConstructor
 public class BaseDoctorController {
 
-    private BaseDoctorSerivice baseDoctorSerivice;
+    private BaseDoctorService baseDoctorService;
 
 
     @RequestMapping("/getDoctor")
 //    @Operation(summary = "查看所有医生")
     public List<Doctor> ListDoctor() {
-        return baseDoctorSerivice.ListDoctor();
+        return baseDoctorService.ListDoctor();
     }
 
     @PostMapping("/addDoctor")
     public boolean addDoctor(@RequestBody Doctor doctors) {
-        return baseDoctorSerivice.save(doctors);
+        return baseDoctorService.save(doctors);
     }
 
     @PostMapping("/updateDoctor")
     public boolean updateDoctor(Doctor doctors) {
-        return baseDoctorSerivice.updateById(doctors);
+        return baseDoctorService.updateById(doctors);
     }
 
     @PostMapping("/delete/doctor/{doctorId}")
     public boolean deleteDoctor(@PathVariable Integer doctorId) {
-        return baseDoctorSerivice.removeDoctorById(doctorId);
+        return baseDoctorService.removeDoctorById(doctorId);
     }
 }
 

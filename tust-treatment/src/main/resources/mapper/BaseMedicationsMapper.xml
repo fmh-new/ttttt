@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tusttreatment.mapper.BaseMedicationsMapper">
+    <select id="ListMedications" resultType="com.example.tusttreatment.pojo.entity.Medications">
+        SELECT * FROM Medications
+        where is_valid = 1
+    </select>
+
+    <update id="removeMedicationsById" parameterType="java.lang.Object">
+        UPDATE Medications
+        SET
+            is_valid = 0
+        WHERE medication_id = #{medicationsId}
+    </update>
+</mapper>

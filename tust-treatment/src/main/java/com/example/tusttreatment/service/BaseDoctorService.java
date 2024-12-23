@@ -6,7 +6,7 @@ import com.example.tusttreatment.pojo.entity.Doctor;
 
 import java.util.List;
 
-public interface BaseDoctorSerivice extends IService<Doctor> {
+public interface BaseDoctorService extends IService<Doctor> {
 
     List<Doctor> ListDoctor();
 
