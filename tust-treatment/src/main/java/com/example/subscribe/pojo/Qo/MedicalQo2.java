@@ -7,12 +7,11 @@ import java.util.Date;
 
 @Data
 public class MedicalQo2 {
+    private Integer id;
 
     private Integer patientId;         // 患者id
 
     private String patientName;
-
-    private Date visitDate;            // 就诊日期
 
     private String chiefComplaint;      // 主诉
 

@@ -15,7 +15,6 @@ public class BaseDoctorController {
 
     private BaseDoctorService baseDoctorService;
 
-
     @RequestMapping("/getDoctor")
 //    @Operation(summary = "查看所有医生")
     public List<Doctor> ListDoctor() {

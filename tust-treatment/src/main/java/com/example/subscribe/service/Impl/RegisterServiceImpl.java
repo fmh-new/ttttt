@@ -2,6 +2,7 @@ package com.example.subscribe.service.Impl;
 
 import com.example.subscribe.mapper.RegisterMapper;
 import com.example.subscribe.pojo.Qo.MedicalQo;
+import com.example.subscribe.pojo.Qo.PrescriptionsQo;
 import com.example.subscribe.pojo.Qo.RegisterQo;
 import com.example.subscribe.pojo.Vo.MedicalVo;
 import com.example.subscribe.pojo.Vo.RegisterVo;
@@ -59,4 +60,30 @@ public class RegisterServiceImpl implements RegisterService {
         medicalQo2.setPatientId(registerMapper.getPatientIdById(medicalQo2.getPatientName()));
         return registerMapper.addMedical(medicalQo2);
     }
+
+    @Override
+    public boolean updateMedical(MedicalQo2 medicalQo2) {
+        if (medicalQo2.getPatientName() != null && !medicalQo2.getPatientName().equals("")) {
+            medicalQo2.setPatientId(registerMapper.getPatientIdById(medicalQo2.getPatientName()));
+        }
+        return registerMapper.updateMedical(medicalQo2);
+    }
+
+    @Override
+    public boolean deleteMedical(MedicalQo2 medicalQo2) {
+        return registerMapper.deleteMedical(medicalQo2);
+    }
+
+    @Override
+    public boolean updateAppointmentStatusByPatientId(int patientId, String 已诊断) {
+        return registerMapper.updateStatusByPatientId(patientId, 已诊断);
+    }
+
+    @Override
+    public List<PrescriptionsQo> getPrescriptions(PrescriptionsQo prescriptionsQo) {
+        return registerMapper.getPrescriptions(prescriptionsQo);
+    }
+
+
+
 }

@@ -3,6 +3,7 @@ package com.example.subscribe.service;
 import java.util.List;
 
 import com.example.subscribe.pojo.Qo.MedicalQo;
+import com.example.subscribe.pojo.Qo.PrescriptionsQo;
 import com.example.subscribe.pojo.Qo.RegisterQo;
 import com.example.subscribe.pojo.Qo.MedicalQo2;
 import com.example.subscribe.pojo.Vo.MedicalVo;
@@ -21,4 +22,12 @@ public interface RegisterService {
     List<MedicalVo> getMedical(MedicalQo medicalQo);
 
     boolean addMedical(MedicalQo2 medicalQo2);
+
+    boolean updateMedical(MedicalQo2 medicalQo2);
+
+    boolean deleteMedical(MedicalQo2 medicalQo2);
+
+    boolean updateAppointmentStatusByPatientId(int patientId, String 已诊断);
+
+    List<PrescriptionsQo> getPrescriptions(PrescriptionsQo prescriptionsQo);
 }

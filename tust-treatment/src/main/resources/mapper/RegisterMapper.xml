@@ -3,7 +3,6 @@
 <mapper namespace="com.example.subscribe.mapper.RegisterMapper">
     <select id="ListRegister" resultType="com.example.subscribe.pojo.Vo.RegisterVo">
         SELECT
-
             p.name AS patientName,
             d.name AS doctorName,
             am.appointment_date AS appointmentDate,
@@ -74,9 +73,61 @@
         </if>
     </select>
 
-    <insert id="addMedical" parameterType="com.example.subscribe.pojo.Vo.MedicalVo">
-        INSERT INTO medical_records(`patient_id`, `visit_date`, `chief_complaint`, `medical_history`, `physical_exam`, `diagnosis`, `treatment_plan`)
-        VALUES (#{patientId}, #{visitDate}, #{chiefComplaint}, #{medicalHistory}, #{physicalExam}, #{diagnosis}, #{treatmentPlan})
+    <insert id="addMedical" parameterType="com.example.subscribe.pojo.Qo.MedicalQo2">
+        INSERT INTO medical_records(`patient_id`, `chief_complaint`, `medical_history`, `physical_exam`, `diagnosis`, `treatment_plan`)
+        VALUES (#{patientId}, #{chiefComplaint}, #{medicalHistory}, #{physicalExam}, #{diagnosis}, #{treatmentPlan})
     </insert>
 
+    <update id="updateMedical" parameterType="com.example.subscribe.pojo.Qo.MedicalQo2">
+        UPDATE medical_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''" >
+                patient_id = #{patientId},
+            </if>
+            <if test="chiefComplaint != null and chiefComplaint != ''">
+                chief_complaint = #{chiefComplaint},
+            </if>
+            <if test="medicalHistory != null and medicalHistory != ''">
+                medical_history = #{medicalHistory},
+            </if>
+            <if test="physicalExam != null and physicalExam != ''">
+                physical_exam = #{physicalExam},
+            </if>
+            <if test="diagnosis != null and diagnosis != ''">
+                diagnosis = #{diagnosis},
+            </if>
+            <if test="treatmentPlan != null and treatmentPlan != ''">
+                treatment_plan = #{treatmentPlan},
+            </if>
+        </trim>
+        WHERE record_id = #{id}
+    </update>
+
+    <update id="deleteMedical" parameterType="com.example.subscribe.pojo.Qo.MedicalQo2">
+        UPDATE medical_records
+        SET
+            is_valid = 0
+        WHERE record_id = #{id}
+    </update>
+
+    <select id="getPrescriptions" resultType="com.example.subscribe.pojo.Qo.PrescriptionsQo">
+        SELECT
+            ps.name AS patientName,
+            ms.name AS medicationName,
+            pp.dosage AS dosage,
+            pp.frequency AS frequency,
+            pp.duration AS duration,
+            pp.created_at AS createdAt,
+            pp.updated_at AS updatedAt
+        FROM
+            prescriptions pp
+                LEFT JOIN medical_records mr ON mr.record_id = pp.record_id
+                LEFT JOIN patients ps ON ps.patient_id = mr.patient_id
+                LEFT JOIN medications ms ON pp.medication_id = ms.medication_id
+        WHERE
+            pp.is_valid = 1;
+        <if test="patientName != null and patientName != ''">
+            AND ps.name LIKE CONCAT('%', #{patientName}, '%')
+        </if>
+    </select>
 </mapper>
