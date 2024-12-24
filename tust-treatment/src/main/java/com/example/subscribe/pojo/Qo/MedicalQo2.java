@@ -1,4 +1,4 @@
-package com.example.subscribe.pojo.Vo;
+package com.example.subscribe.pojo.Qo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class MedicalVo {
+public class MedicalQo2 {
 
     private Integer patientId;         // 患者id
 

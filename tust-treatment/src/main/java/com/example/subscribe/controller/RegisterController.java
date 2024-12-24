@@ -2,14 +2,12 @@ package com.example.subscribe.controller;
 
 import com.example.subscribe.pojo.Qo.MedicalQo;
 import com.example.subscribe.pojo.Qo.RegisterQo;
+import com.example.subscribe.pojo.Qo.MedicalQo2;
 import com.example.subscribe.pojo.Vo.MedicalVo;
 import com.example.subscribe.pojo.Vo.RegisterVo;
 import com.example.subscribe.service.RegisterService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,4 +42,10 @@ public class RegisterController {
     public List<MedicalVo> getMedical(MedicalQo medicalQo){
         return registerService.getMedical(medicalQo);
     }
+
+    @PostMapping("/addMedical")
+    public boolean addMedical(@RequestBody MedicalQo2 medicalQo2){
+        return registerService.addMedical(medicalQo2);
+    }
+
 }

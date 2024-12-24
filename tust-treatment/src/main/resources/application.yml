@@ -17,4 +17,4 @@ mybatis-plus:
     auto-mapping-behavior: full
     # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.example.tusttreatment.pojo.entity,com.example.subscribe.pojo.vo,com.example.subscribe.pojo.qo
+  type-aliases-package: com.example.tusttreatment.pojo.entity,com.example.subscribe.pojo.Vo,com.example.subscribe.pojo.Qo

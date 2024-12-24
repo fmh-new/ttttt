@@ -74,4 +74,9 @@
         </if>
     </select>
 
+    <insert id="addMedical" parameterType="com.example.subscribe.pojo.Vo.MedicalVo">
+        INSERT INTO medical_records(`patient_id`, `visit_date`, `chief_complaint`, `medical_history`, `physical_exam`, `diagnosis`, `treatment_plan`)
+        VALUES (#{patientId}, #{visitDate}, #{chiefComplaint}, #{medicalHistory}, #{physicalExam}, #{diagnosis}, #{treatmentPlan})
+    </insert>
+
 </mapper>

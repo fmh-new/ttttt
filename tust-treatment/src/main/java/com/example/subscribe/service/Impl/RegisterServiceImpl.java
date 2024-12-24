@@ -8,6 +8,7 @@ import com.example.subscribe.pojo.Vo.RegisterVo;
 import com.example.subscribe.service.RegisterService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.example.subscribe.pojo.Qo.MedicalQo2;
 
 import java.util.List;
 @Service
@@ -51,5 +52,11 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public List<MedicalVo> getMedical(MedicalQo medicalQo) {
         return registerMapper.getMedical(medicalQo);
+    }
+
+    @Override
+    public boolean addMedical(MedicalQo2 medicalQo2) {
+        medicalQo2.setPatientId(registerMapper.getPatientIdById(medicalQo2.getPatientName()));
+        return registerMapper.addMedical(medicalQo2);
     }
 }
