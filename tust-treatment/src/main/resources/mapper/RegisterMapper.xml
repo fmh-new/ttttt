@@ -3,6 +3,7 @@
 <mapper namespace="com.example.subscribe.mapper.RegisterMapper">
     <select id="ListRegister" resultType="com.example.subscribe.pojo.Vo.RegisterVo">
         SELECT
+
             p.name AS patientName,
             d.name AS doctorName,
             am.appointment_date AS appointmentDate,
@@ -27,5 +28,50 @@
         INSERT INTO appointments (`patient_id`, `doctor_id`, `appointment_date`, `status`)
         VALUES (#{patientId}, #{doctorId}, #{appointmentDate}, #{status});
     </insert>
+
+    <update id="updateRegister" parameterType="com.example.subscribe.pojo.Qo.RegisterQo">
+        UPDATE appointments
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="patientId != null and patientId != ''" >
+                patient_id = #{patientId},
+            </if>
+            <if test="doctorId != null and doctorId != ''">
+                doctor_id = #{doctorId},
+            </if>
+            <if test="appointmentDate != null and appointmentDate != ''">
+                appointment_date = #{appointmentDate},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+        </trim>
+        WHERE appointment_id = #{id}
+    </update>
+
+    <update id="deleteRegister" parameterType="com.example.subscribe.pojo.Qo.RegisterQo">
+        UPDATE appointments
+        SET
+            is_valid = 0
+        WHERE appointment_id = #{id}
+    </update>
+
+    <select id="getMedical" resultType="com.example.subscribe.pojo.Vo.MedicalVo">
+        SELECT
+            p.name as patientName,
+            mr.visit_date as visitDate,
+            mr.chief_complaint as chiefComplaint,
+            mr.medical_history as medicalHistory,
+            mr.physical_exam as physicalExam,
+            mr.diagnosis as diagnosis,
+            mr.treatment_plan as treatmentPlan,
+            mr.created_at as createdAt,
+            mr.updated_at as updatedAt
+        FROM medical_records mr
+                 LEFT JOIN patients p ON p.patient_id =mr.patient_id
+        WHERE mr.is_valid=1
+        <if test="patientName != null and patientName != ''">
+            AND p.name LIKE CONCAT('%', #{patientName}, '%')
+        </if>
+    </select>
 
 </mapper>

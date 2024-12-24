@@ -1,6 +1,8 @@
 package com.example.subscribe.controller;
 
+import com.example.subscribe.pojo.Qo.MedicalQo;
 import com.example.subscribe.pojo.Qo.RegisterQo;
+import com.example.subscribe.pojo.Vo.MedicalVo;
 import com.example.subscribe.pojo.Vo.RegisterVo;
 import com.example.subscribe.service.RegisterService;
 import lombok.AllArgsConstructor;
@@ -19,8 +21,8 @@ public class RegisterController {
     private RegisterService registerService;
 
     @GetMapping("/getRegister")
-    public List<RegisterVo> getRegister(){
-        return registerService.ListRegister();
+    public List<RegisterVo> getRegister(RegisterQo registerQo){
+        return registerService.ListRegister(registerQo);
     }
 
     @PostMapping("/addRegister")
@@ -28,4 +30,18 @@ public class RegisterController {
         return registerService.addRegister(registerQo);
     }
 
+    @PostMapping("/updateRegister")
+    public boolean updateRegister(RegisterQo registerQo){
+        return registerService.updateRegister(registerQo);
+    }
+
+    @PostMapping("/deleteRegister")
+    public boolean deleteRegister(RegisterQo registerQo){
+        return registerService.deleteRegister(registerQo);
+    }
+
+    @GetMapping("/getMedical")
+    public List<MedicalVo> getMedical(MedicalQo medicalQo){
+        return registerService.getMedical(medicalQo);
+    }
 }
