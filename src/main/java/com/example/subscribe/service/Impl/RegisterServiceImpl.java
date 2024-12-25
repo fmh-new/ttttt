@@ -1,15 +1,13 @@
 package com.example.subscribe.service.Impl;
 
 import com.example.subscribe.mapper.RegisterMapper;
-import com.example.subscribe.pojo.Qo.MedicalQo;
-import com.example.subscribe.pojo.Qo.PrescriptionsQo;
-import com.example.subscribe.pojo.Qo.RegisterQo;
+import com.example.subscribe.pojo.Qo.*;
 import com.example.subscribe.pojo.Vo.MedicalVo;
+import com.example.subscribe.pojo.Vo.PrescriptionsVo;
 import com.example.subscribe.pojo.Vo.RegisterVo;
 import com.example.subscribe.service.RegisterService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.example.subscribe.pojo.Qo.MedicalQo2;
 
 import java.util.List;
 @Service
@@ -80,10 +78,48 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public List<PrescriptionsQo> getPrescriptions(PrescriptionsQo prescriptionsQo) {
+    public List<PrescriptionsVo> getPrescriptions(PrescriptionsQo prescriptionsQo) {
         return registerMapper.getPrescriptions(prescriptionsQo);
     }
 
+    @Override
+    public boolean addPrescriptions(PrescriptionsQo2 prescriptionsQo2) {
+        // 根据患者姓名获取患者 ID
+        int patientId = registerMapper.getPatientIdById(prescriptionsQo2.getPatientName());
+        prescriptionsQo2.setPatientId(patientId);
+
+        // 根据患者 ID 获取记录 ID
+        int recordId = registerMapper.getRecordId(patientId);
+        prescriptionsQo2.setRecordId(recordId);
+
+        // 根据药物名称获取药物 ID
+        int medicationId = registerMapper.getMedicalIdById(prescriptionsQo2.getMedicationName());
+        prescriptionsQo2.setMedicationId(medicationId);
+
+        // 添加处方并返回结果
+        return registerMapper.addPrescriptions(prescriptionsQo2);
+    }
+
+    @Override
+    public boolean updatePrescriptions(PrescriptionsQo2 prescriptionsQo2) {
+        if (prescriptionsQo2.getPatientName() != null && !prescriptionsQo2.getPatientName().equals("")) {
+            int patientId = registerMapper.getPatientIdById(prescriptionsQo2.getPatientName());
+            prescriptionsQo2.setPatientId(patientId);
+
+            int recordId = registerMapper.getRecordId(patientId);
+            prescriptionsQo2.setRecordId(recordId);
+        }
+        if (prescriptionsQo2.getMedicationName() != null && !prescriptionsQo2.getMedicationName().equals("")) {
+            int medicationId = registerMapper.getMedicalIdById(prescriptionsQo2.getMedicationName());
+            prescriptionsQo2.setMedicationId(medicationId);
+        }
+        return registerMapper.updatePrescriptions(prescriptionsQo2);
+    }
+
+    @Override
+    public boolean deletePrescriptions(PrescriptionsQo3 prescriptionsQo3) {
+        return registerMapper.deletePrescriptions(prescriptionsQo3);
+    }
 
 
 }

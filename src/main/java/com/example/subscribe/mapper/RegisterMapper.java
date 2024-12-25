@@ -1,10 +1,8 @@
 package com.example.subscribe.mapper;
 
-import com.example.subscribe.pojo.Qo.MedicalQo;
-import com.example.subscribe.pojo.Qo.MedicalQo2;
-import com.example.subscribe.pojo.Qo.PrescriptionsQo;
-import com.example.subscribe.pojo.Qo.RegisterQo;
+import com.example.subscribe.pojo.Qo.*;
 import com.example.subscribe.pojo.Vo.MedicalVo;
+import com.example.subscribe.pojo.Vo.PrescriptionsVo;
 import com.example.subscribe.pojo.Vo.RegisterVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -40,5 +38,17 @@ public interface RegisterMapper {
     @Update("UPDATE appointments SET status = #{status} WHERE patient_id = #{patientId}")
     boolean updateStatusByPatientId(@Param("patientId") int patientId, @Param("status") String status);
 
-    List<PrescriptionsQo> getPrescriptions(PrescriptionsQo prescriptionsQo);
+    List<PrescriptionsVo> getPrescriptions(PrescriptionsQo prescriptionsQo);
+
+    @Select("SELECT medication_id as medicationId FROM medications WHERE name = #{name}")
+    int getMedicalIdById(@Param("name") String name);
+
+    @Select("SELECT record_id as recordId FROM medical_records WHERE patient_id = #{patient_id}")
+    int getRecordId(@Param("patient_id") int patient_id);
+
+    boolean addPrescriptions(PrescriptionsQo2 prescriptionsQo2);
+
+    boolean updatePrescriptions(PrescriptionsQo2 prescriptionsQo2);
+
+    boolean deletePrescriptions(PrescriptionsQo3 prescriptionsQo3);
 }

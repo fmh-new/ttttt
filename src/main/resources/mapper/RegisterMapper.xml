@@ -110,7 +110,7 @@
         WHERE record_id = #{id}
     </update>
 
-    <select id="getPrescriptions" resultType="com.example.subscribe.pojo.Qo.PrescriptionsQo">
+    <select id="getPrescriptions" resultType="com.example.subscribe.pojo.Vo.PrescriptionsVo">
         SELECT
             ps.name AS patientName,
             ms.name AS medicationName,
@@ -125,9 +125,43 @@
                 LEFT JOIN patients ps ON ps.patient_id = mr.patient_id
                 LEFT JOIN medications ms ON pp.medication_id = ms.medication_id
         WHERE
-            pp.is_valid = 1;
+            pp.is_valid = 1
         <if test="patientName != null and patientName != ''">
             AND ps.name LIKE CONCAT('%', #{patientName}, '%')
         </if>
     </select>
+
+    <insert id="addPrescriptions" parameterType="com.example.subscribe.pojo.Qo.PrescriptionsQo2">
+        INSERT INTO prescriptions(`record_id`, `medication_id`, `dosage`, `frequency`, `duration`)
+        VALUES (#{recordId}, #{medicationId}, #{dosage}, #{frequency}, #{duration})
+    </insert>
+
+    <update id="updatePrescriptions" parameterType="com.example.subscribe.pojo.Qo.PrescriptionsQo2">
+        UPDATE prescriptions
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordId != null and recordId != ''" >
+                record_id = #{recordId},
+            </if>
+            <if test="medicationId != null and medicationId != ''">
+                medication_id = #{medicationId},
+            </if>
+            <if test="dosage != null and dosage != ''">
+                dosage = #{dosage},
+            </if>
+            <if test="frequency != null and frequency != ''">
+                frequency = #{frequency},
+            </if>
+            <if test="duration != null and duration != ''">
+                duration = #{duration},
+            </if>
+        </trim>
+        WHERE prescription_id = #{id} and is_valid = 1
+    </update>
+
+    <update id="deletePrescriptions" parameterType="com.example.subscribe.pojo.Qo.PrescriptionsQo2">
+        UPDATE prescriptions
+        SET
+            is_valid = 0
+        WHERE prescription_id = #{id}
+    </update>
 </mapper>
